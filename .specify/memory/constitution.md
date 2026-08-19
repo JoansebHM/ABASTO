@@ -1,7 +1,7 @@
 <!-- Sync Impact Report
-Version change: 1.0.0 -> 1.1.0
+Version change: 1.1.0 -> 1.2.0
 Modified principles: None
-Added sections: Flujo de Trabajo en Equipo (Git y Coordinación de Tasks)
+Added sections: Pruebas Automatizadas y CI/CD, Flujo de Trabajo en Equipo (Git y Coordinación de Tasks)
 Removed sections: None
 Follow-up TODOs: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial
 -->
@@ -243,6 +243,53 @@ el de otra, el equipo DEBE seguir estas reglas:
   directa entre ambas (o con quien revisa el PR), nunca eligiendo una versión
   arbitrariamente sin entender el impacto en la otra task.
 
+## Pruebas Automatizadas y CI/CD
+
+La calidad y seguridad del código no dependen de la revisión manual
+únicamente: todo cambio DEBE pasar por un pipeline automatizado antes de
+integrarse.
+
+- **Prohibido el push directo a `main`**: `main` solo recibe cambios a través
+  de un Pull Request desde `develop` (o desde un branch de hotfix en caso de
+  emergencia), nunca mediante push directo. La rama `main` DEBE estar
+  protegida a nivel de repositorio para impedir esto técnicamente, no solo
+  por acuerdo de equipo.
+- **Prohibido el push directo a `develop`**: de igual forma, `develop` solo
+  recibe cambios mediante Pull Request desde branches de feature. Esto
+  garantiza que ningún cambio llega a la rama de integración sin pasar por
+  el pipeline y sin revisión.
+- **Pipeline obligatorio en cada Pull Request**, que como mínimo DEBE
+  ejecutar:
+  - **Lint y type-check**: validación de estilo y tipos de TypeScript.
+  - **Build**: el proyecto DEBE compilar exitosamente antes de poder
+    mergearse.
+  - **Pruebas automatizadas**: tests unitarios y/o de integración DEBEN
+    ejecutarse y pasar en su totalidad. Ningún PR se mergea con tests en
+    rojo.
+  - **Verificación de conflictos de merge**: el pipeline DEBE confirmar que
+    el branch está actualizado y sin conflictos contra su rama destino antes
+    de permitir el merge.
+- **Cobertura mínima de pruebas por capa**:
+  - **Frontend**: pruebas unitarias de componentes y lógica crítica (ej.
+    validaciones de formularios, stores de Zustand) con Vitest + Testing
+    Library.
+  - **Base de datos (Postgres/Supabase)**: pruebas sobre funciones, triggers
+    y políticas RLS críticas (ej. que el inventario efectivamente no se
+    actualice hasta `recibido`, que un líder no pueda leer/editar puntos que
+    no le pertenecen), mediante pgTAP o pruebas de integración equivalentes.
+  - **Edge Functions**: pruebas de integración que validen el comportamiento
+    esperado (ej. que la verificación de identidad rechace/apruebe según
+    corresponda) antes de desplegarse.
+- **Prácticas de seguridad en el pipeline**: el pipeline DEBE incluir, como
+  mínimo, escaneo de dependencias vulnerables (ej. `npm audit` o equivalente)
+  y verificación de que no se filtran secretos al código (ej. revisión
+  automática de que no haya llaves o credenciales hardcodeadas antes de
+  permitir el merge).
+- **Despliegue automatizado desde `main`**: cada merge exitoso a `main`
+  DEBE disparar el despliegue automático a producción (frontend en Vercel,
+  backend/DB en Supabase), de forma que `main` sea siempre el reflejo exacto
+  de lo que está en producción.
+
 ## Governance
 
 Esta Constitución prevalece sobre cualquier otra práctica de desarrollo,
@@ -260,4 +307,4 @@ Toda revisión de pull request o de especificación DEBE verificar cumplimiento
 con los principios centrales. Cualquier complejidad que se aparte de un
 principio DEBE justificarse explícitamente por escrito o rechazarse.
 
-**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-19
+**Version**: 1.2.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-19
