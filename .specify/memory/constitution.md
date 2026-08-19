@@ -1,8 +1,8 @@
 <!-- Sync Impact Report
-Version change: template scaffold -> 1.0.0
-Modified principles: None (initial constitution)
-Added sections: Core Principles I-XI, Stack Tecnológico Inicial, Restricciones Adicionales, Flujo de Desarrollo, Governance
-Removed sections: Template placeholders
+Version change: 1.0.0 -> 1.1.0
+Modified principles: None
+Added sections: Flujo de Trabajo en Equipo (Git y Coordinación de Tasks)
+Removed sections: None
 Follow-up TODOs: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial
 -->
 
@@ -214,6 +214,35 @@ DEBE enmendarse primero, de forma versionada, antes de proceder. Los planes de
 implementación y las tareas derivadas DEBEN verificar cumplimiento contra los
 principios centrales antes de pasar a implement.
 
+## Flujo de Trabajo en Equipo
+
+Para evitar que el trabajo de una persona sobrescriba o entre en conflicto con
+el de otra, el equipo DEBE seguir estas reglas:
+
+- **Un branch por feature**: cada feature generada con Spec Kit vive en su
+  propio branch (el que Spec Kit crea automáticamente, ej. `001-nombre-feature`).
+  Nadie trabaja directo sobre `main`.
+- **Ninguna task se marca como paralelizable si comparte archivos con otra
+  task activa**: antes de repartir tasks entre personas, se revisa qué
+  archivos toca cada una (`tasks.md` los lista). Si dos tasks tocan el mismo
+  archivo, se ejecutan de forma secuencial y coordinada, nunca al mismo tiempo
+  por dos personas distintas.
+- **Pull Request obligatorio antes de integrar a `main`**: ningún cambio se
+  mezcla sin al menos una revisión. El PR es el punto donde git muestra
+  automáticamente si hay conflictos de código antes de que lleguen a `main`.
+- **Sincronización frecuente**: cada persona actualiza su branch contra
+  `main` (pull/rebase) con regularidad mientras trabaja, para detectar
+  conflictos temprano y no acumular divergencia grande entre branches.
+- **Migraciones de base de datos (Supabase) se coordinan explícitamente**:
+  al ser el punto más propenso a conflictos reales (no solo de texto, sino de
+  lógica), toda migración nueva se anuncia al equipo antes de crearse, se
+  numera/timestampa de forma secuencial, y no se crean dos migraciones en
+  paralelo sin coordinación previa.
+- **Nadie resuelve un conflicto de merge en silencio**: si aparece un
+  conflicto entre el trabajo de dos personas, se resuelve en conversación
+  directa entre ambas (o con quien revisa el PR), nunca eligiendo una versión
+  arbitrariamente sin entender el impacto en la otra task.
+
 ## Governance
 
 Esta Constitución prevalece sobre cualquier otra práctica de desarrollo,
@@ -231,4 +260,4 @@ Toda revisión de pull request o de especificación DEBE verificar cumplimiento
 con los principios centrales. Cualquier complejidad que se aparte de un
 principio DEBE justificarse explícitamente por escrito o rechazarse.
 
-**Version**: 1.0.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-18
+**Version**: 1.1.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-19
