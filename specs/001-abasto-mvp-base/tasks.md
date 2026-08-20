@@ -54,7 +54,7 @@
 ### Tests for User Story 1
 
 - [ ] T011 [P] [US1] Crear pruebas de flujo de autenticación y verificación en `frontend/tests/integration/auth-verification.spec.ts` cubriendo registro, login, envío de documentos y decisión administrativa
-- [ ] T012 [P] [US1] Crear pruebas de políticas de acceso en `frontend/tests/unit/guards.test.ts` y `frontend/tests/unit/verification-status.test.ts` para validar bloqueo de escritura a líderes no verificados
+- [x] T012 [P] [US1] Crear pruebas de políticas de acceso en `frontend/tests/unit/guards.test.ts` y `frontend/tests/unit/verification-status.test.ts` para validar bloqueo de escritura a líderes no verificados
 
 ### Implementation for User Story 1 — Formularios y validación
 
@@ -67,8 +67,8 @@ En línea con `plan.md` todos los formularios deben implementarse con React Hook
 - [x] T017 [US1] Crear el store global de autenticación en `frontend/src/features/auth/stores/useAuthStore.ts` con Zustand para centralizar la sesión, usuario, perfil, estado de verificación, permisos y estados de carga/error del módulo, persistiendo la sesión recibida al completar login y exponiendo acciones para hidratarla y cerrarla
 - [x] T018 [P] [US1] Crear componente de UI `AuthForm.tsx` en `frontend/src/features/auth/components/AuthForm.tsx` usando `useForm<...>` con `resolver: valibotResolver(authSchema)` y tipos inferidos desde Valibot
 - [x] T019 [US1] Implementar páginas `RegisterPage.tsx` y `LoginPage.tsx` en `frontend/src/features/auth/pages/` que orquesten `AuthForm`, llamen a los hooks de mutación, persistan la sesión con `useAuthStore.setSession`, hidraten el perfil y permisos con `useAuthStore.hydrate` tras autenticación y muestren estados `isSubmitting`, `errors`, `isValid`
-- [ ] T020 [P] [US1] Crear pruebas unitarias de integración formulario→resolver en `frontend/tests/unit/auth-form.schema.test.ts` para validar que el `auth.schema.ts` rechaza/acepta ejemplos válidos/inválidos
-- [ ] T021 [P] [US1] Crear pruebas de integración para el flujo de registro/login en `frontend/tests/integration/auth-verification.spec.ts` que simulen interacción del formulario, verifiquen llamadas al `authService` y comprueben la persistencia/limpieza de sesión en `useAuthStore` (mocked)
+- [x] T020 [P] [US1] Crear pruebas unitarias de integración formulario→resolver en `frontend/tests/unit/auth-form.schema.test.ts` para validar que el `auth.schema.ts` rechaza/acepta ejemplos válidos/inválidos
+- [x] T021 [P] [US1] Crear pruebas de integración para el flujo de registro/login en `frontend/tests/integration/auth-verification.spec.ts` que simulen interacción del formulario, verifiquen llamadas al `authService` y comprueben la persistencia/limpieza de sesión en `useAuthStore` (mocked)
 
 **Checkpoint**: Los formularios de autenticación usan RHF + Valibot, están tipados, y las mutaciones están encapsuladas en hooks reutilizables.
 
@@ -84,20 +84,21 @@ En línea con `plan.md` todos los formularios deben implementarse con React Hook
 
 ### Tests for User Story 2
 
-- [ ] T022 [P] [US2] Crear pruebas de flujo de puntos e inventario en `frontend/tests/integration/points-inventory.spec.ts` cubriendo alta de punto, carga inicial y ajuste posterior
-- [ ] T023 [P] [US2] Crear pruebas unitarias de cálculo de inventario y validaciones en `frontend/tests/unit/inventory-ledger.test.ts` y `frontend/tests/unit/point-validation.test.ts`
+- [x] T022 [P] [US2] Crear pruebas de flujo de puntos e inventario en `frontend/tests/integration/points-inventory.spec.ts` cubriendo alta de punto, carga inicial y ajuste posterior
+- [x] T023 [P] [US2] Crear pruebas unitarias de cálculo de inventario y validaciones en `frontend/tests/unit/inventory-ledger.test.ts` y `frontend/tests/unit/point-validation.test.ts`
 
 ### Implementation for User Story 2 — Formularios de punto e inventario
 
 Prioridad en validación y tipos: cada formulario de puntos e inventario debe definir su esquema Valibot, inferir tipos y usar `useForm` con `valibotResolver`.
 
-- [ ] T024 [P] [US2] Definir esquema Valibot para `PointForm` en `frontend/src/features/points/schemas/point.schema.ts` (tipos con `v.InferInput`)
-- [ ] T025 [P] [US2] Implementar `PointForm.tsx` en `frontend/src/features/points/components/PointForm.tsx` usando `useForm<PointFormValues>` con `resolver: valibotResolver(pointSchema)` y exponer estados de validación
-- [ ] T026 [P] [US2] Implementar `PointMapPicker.tsx` en `frontend/src/features/points/components/PointMapPicker.tsx` (componente separado que proporciona coordenadas al formulario sin mezclar lógica en `PointForm`)
-- [ ] T027 [P] [US2] Crear `pointService.ts` en `frontend/src/features/points/api/pointService.ts` reutilizando `frontend/src/lib/supabase.ts` y `frontend/src/features/points/hooks/useCreatePoint.ts` (TanStack Query)
-- [ ] T028 [P] [US2] Definir esquema Valibot para `InventoryEditor` en `frontend/src/features/points/schemas/inventory.schema.ts` y crear `InventoryEditor.tsx` en `frontend/src/features/points/components/InventoryEditor.tsx` usando React Hook Form
-- [ ] T029 [US2] Implementar `inventoryService.ts` en `frontend/src/features/points/api/inventoryService.ts` y hooks `useAdjustInventory.ts` que creen entradas de ledger e invaliden snapshots en `frontend/src/features/points/hooks/`
-- [ ] T030 [P] [US2] Añadir pruebas unitarias de validación para `point.schema.ts` y `inventory.schema.ts` en `frontend/tests/unit/point-validation.test.ts` y `frontend/tests/unit/inventory-ledger.test.ts`
+- [x] T024 [P] [US2] Definir esquema Valibot para `PointForm` en `frontend/src/features/points/schemas/point.schema.ts` (tipos con `v.InferInput`)
+- [x] T025 [P] [US2] Implementar `PointForm.tsx` en `frontend/src/features/points/components/PointForm.tsx` usando `useForm<PointFormValues>` con `resolver: valibotResolver(pointSchema)` y exponer estados de validación
+- [x] T026 [US2] Integrar `PointForm` en el dashboard privado en `frontend/src/routes/private/index.tsx`, mostrando el formulario y la acción de creación únicamente a líderes con permisos de punto aprobado, y ocultándolo o bloqueándolo para administradores y líderes pendientes/rechazados
+- [x] T027 [P] [US2] Implementar `PointMapPicker.tsx` en `frontend/src/features/points/components/PointMapPicker.tsx` (componente separado que proporciona coordenadas al formulario sin mezclar lógica en `PointForm`)
+- [x] T028 [P] [US2] Crear `pointService.ts` en `frontend/src/features/points/api/pointService.ts` reutilizando `frontend/src/lib/supabase.ts`, implementar `useCreatePoint.ts` con TanStack Query y conectar el `onSubmit` de `PointForm` en `frontend/src/routes/private/index.tsx` para que el botón ejecute `mutateAsync`, muestre estado de guardado, éxito/error e invalide la cache de puntos
+- [x] T029 [P] [US2] Definir esquema Valibot para `InventoryEditor` en `frontend/src/features/points/schemas/inventory.schema.ts` y crear `InventoryEditor.tsx` en `frontend/src/features/points/components/InventoryEditor.tsx` usando React Hook Form
+- [x] T030 [US2] Implementar `inventoryService.ts` en `frontend/src/features/points/api/inventoryService.ts`, el hook `useAdjustInventory.ts` y conectar `InventoryEditor` en `frontend/src/routes/private/index.tsx` únicamente para líderes aprobados, ejecutando el RPC, mostrando estado/éxito/error e invalidando inventario y puntos
+- [x] T031 [P] [US2] Añadir pruebas unitarias de validación para `point.schema.ts` y `inventory.schema.ts` en `frontend/tests/unit/point-validation.test.ts` y `frontend/tests/unit/inventory-ledger.test.ts`
 
 **Checkpoint**: Formularios de punto e inventario están validados, tipados, desacoplados (map picker separado) y conectados a servicios reutilizables.
 
@@ -113,16 +114,16 @@ Prioridad en validación y tipos: cada formulario de puntos e inventario debe de
 
 ### Tests for User Story 3
 
-- [ ] T031 [P] [US3] Crear pruebas de UI pública y navegación anónima en `frontend/tests/e2e/public-landing-map.spec.ts` para validar Home, Dashboard y mapa público
-- [ ] T032 [P] [US3] Crear pruebas unitarias del loader público y el filtro por evento en `frontend/tests/unit/public-map-loader.test.ts` y `frontend/tests/unit/event-filter.test.ts`
+- [ ] T032 [P] [US3] Crear pruebas de UI pública y navegación anónima en `frontend/tests/e2e/public-landing-map.spec.ts` para validar Home, Dashboard y mapa público
+- [ ] T033 [P] [US3] Crear pruebas unitarias del loader público y el filtro por evento en `frontend/tests/unit/public-map-loader.test.ts` y `frontend/tests/unit/event-filter.test.ts`
 
 ### Implementation for User Story 3 — Formularios públicos y filtros
 
 User Story 3 tiene formularios ligeros (filtros/selector). Aplicar las mismas reglas de validación cuando aplique.
 
-- [ ] T033 [P] [US3] Implementar `EventSelector.tsx` en `frontend/src/features/map/components/EventSelector.tsx` con esquema Valibot `frontend/src/features/map/schemas/event-filter.schema.ts` cuando el selector acepte entrada libre (p.ej. fechas/rango)
-- [ ] T034 [P] [US3] Implementar `PublicMapPage.tsx` y `PublicMap.tsx` en `frontend/src/features/map/pages/PublicMapPage.tsx` y `frontend/src/features/map/components/PublicMap.tsx` (el loader público debe usar hooks en `frontend/src/features/map/hooks.ts`)
-- [ ] T035 [P] [US3] Añadir pruebas unitarias para los loaders públicos y el `EventSelector` en `frontend/tests/unit/public-map-loader.test.ts` y `frontend/tests/unit/event-filter.test.ts`
+- [x] T034 [P] [US3] Implementar `EventSelector.tsx` en `frontend/src/features/map/components/EventSelector.tsx` con esquema Valibot `frontend/src/features/map/schemas/event-filter.schema.ts` e integrarlo en la Home para filtrar los puntos públicos por evento
+- [ ] T035 [P] [US3] Implementar `PublicMapPage.tsx` y `PublicMap.tsx` en `frontend/src/features/map/pages/PublicMapPage.tsx` y `frontend/src/features/map/components/PublicMap.tsx` (el loader público debe usar hooks en `frontend/src/features/map/hooks.ts`)
+- [ ] T036 [P] [US3] Añadir pruebas unitarias para los loaders públicos y el `EventSelector` en `frontend/tests/unit/public-map-loader.test.ts` y `frontend/tests/unit/event-filter.test.ts`
 
 **Checkpoint**: Los filtros públicos siguen las reglas de validación, el mapa consume hooks y el loader es testeable.
 
@@ -134,18 +135,18 @@ User Story 3 tiene formularios ligeros (filtros/selector). Aplicar las mismas re
 
 **Purpose**: Cierre técnico, seguridad, accesibilidad, rendimiento y validación final contra quickstart.
 
-- [ ] T036 [P] Revisar accesibilidad y responsive design en `frontend/src/features/landing/pages/LandingPage.tsx`, `frontend/src/features/map/pages/PublicMapPage.tsx` y `frontend/src/components/layout/AppShell.tsx` para garantizar navegación usable en móvil y escritorio
-- [ ] T037 [P] Endurecer seguridad y privacidad en `supabase/migrations/0002_security.sql`, `supabase/policies/*.sql` y `frontend/src/lib/env.ts` validando RLS, storage privado y manejo seguro de variables de entorno
-- [ ] T038 Ejecutar la validación final de quickstart en `specs/001-abasto-mvp-base/quickstart.md` y alinear cualquier ajuste necesario en `frontend/tests/` y `supabase/seeds/001_initial.sql`
+- [ ] T037 [P] Revisar accesibilidad y responsive design en `frontend/src/features/landing/pages/LandingPage.tsx`, `frontend/src/features/map/pages/PublicMapPage.tsx` y `frontend/src/components/layout/AppShell.tsx` para garantizar navegación usable en móvil y escritorio
+- [ ] T038 [P] Endurecer seguridad y privacidad en `supabase/migrations/0002_security.sql`, `supabase/policies/*.sql` y `frontend/src/lib/env.ts` validando RLS, storage privado y manejo seguro de variables de entorno
+- [ ] T039 Ejecutar la validación final de quickstart en `specs/001-abasto-mvp-base/quickstart.md` y alinear cualquier ajuste necesario en `frontend/tests/` y `supabase/seeds/001_initial.sql`
 
 ---
 
 ## Cross-cutting: Formularios, schemas y utilidades obligatorias
 
-- [ ] T039 Crear `frontend/src/lib/valibotResolver.ts` — wrapper para `@hookform/resolvers` que exporta `valibotResolver(schema)` y ejemplos en README corto
-- [ ] T040 Añadir `frontend/src/features/**/schemas/*.schema.ts` por cada feature que use formularios (auth, verification, points, inventory, map filters)
-- [ ] T041 Documentar la convención de formularios en `specs/001-abasto-mvp-base/checklists/form-guidelines.md` explicando: esquema → InferInput → useForm → hooks → servicio
-- [ ] T042 Crear pruebas de contrato para formularios: `frontend/tests/unit/form-schema-compat.test.ts` que asegura que `InferInput<typeofschema>` coincide con los tipos usados en `useForm` en archivos ejemplo
+- [ ] T040 Crear `frontend/src/lib/valibotResolver.ts` — wrapper para `@hookform/resolvers` que exporta `valibotResolver(schema)` y ejemplos en README corto
+- [ ] T041 Añadir `frontend/src/features/**/schemas/*.schema.ts` por cada feature que use formularios (auth, verification, points, inventory, map filters)
+- [ ] T042 Documentar la convención de formularios en `specs/001-abasto-mvp-base/checklists/form-guidelines.md` explicando: esquema → InferInput → useForm → hooks → servicio
+- [ ] T043 Crear pruebas de contrato para formularios: `frontend/tests/unit/form-schema-compat.test.ts` que asegura que `InferInput<typeofschema>` coincide con los tipos usados en `useForm` en archivos ejemplo
 
 ---
 
@@ -185,8 +186,9 @@ User Story 3 tiene formularios ligeros (filtros/selector). Aplicar las mismas re
 - `T013`, `T014` y `T018` pueden correr en paralelo porque tocan archivos distintos de US1 y no dependen del store.
 - `T017` debe completarse antes de integrar el login en `T019` y de validar la persistencia en `T021`.
 - `T023` y `T024` pueden correr en paralelo porque separan el formulario de punto y el selector geográfico de US2.
-- `T032` y `T033` pueden correr en paralelo porque separan el selector y el mapa público de US3.
-- `T035` y `T036` pueden correr en paralelo porque separan UI/accesibilidad y seguridad/políticas.
+- `T025` debe completarse antes de `T026`; `T026` debe respetar los permisos derivados de `useAuthStore` y preceder la integración de `T028`.
+- `T033` y `T034` pueden correr en paralelo porque separan el selector y el mapa público de US3.
+- `T036` y `T037` pueden correr en paralelo porque separan UI/accesibilidad y seguridad/políticas.
 
 ---
 

@@ -7,6 +7,7 @@ import RegisterPage from '../features/auth/pages/RegisterPage';
 import HomePage from './public/index';
 import DashboardPage from './private/index';
 import RequireAuth from './guards/RequireAuth';
+import PublicMapPage from '../features/map/pages/PublicMapPage';
 
 export default function AppRoutes() {
   return (
@@ -35,6 +36,15 @@ export default function AppRoutes() {
           element={
             <PublicShell>
               <RegisterPage />
+            </PublicShell>
+          }
+        />
+
+        <Route
+          path="/map"
+          element={
+            <PublicShell>
+              <PublicMapPage />
             </PublicShell>
           }
         />
