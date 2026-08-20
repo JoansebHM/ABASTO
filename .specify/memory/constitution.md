@@ -1,7 +1,7 @@
 <!-- Sync Impact Report
-Version change: 1.1.0 -> 1.2.0
+Version change: 1.2.0 -> 1.3.0
 Modified principles: None
-Added sections: Pruebas Automatizadas y CI/CD, Flujo de Trabajo en Equipo (Git y Coordinación de Tasks)
+Added sections: None
 Removed sections: None
 Follow-up TODOs: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial
 -->
@@ -178,6 +178,14 @@ de implementación.
 - Tailwind CSS para estilos.
 - Axios como cliente HTTP para integraciones que no pasen por el SDK de
   Supabase.
+- Geovisor como componente base para visualización geoespacial de puntos de
+  acopio y capas relacionadas.
+- MapLibre para renderizado de mapas interactivos y navegación cartográfica en
+  cliente.
+- Turf.js para operaciones geoespaciales del frontend, incluyendo cálculos,
+  filtros y transformaciones de geometrías requeridas por la experiencia de
+  mapa.
+- Lucide React como librería estándar de íconos de interfaz.
 
 **Backend y Base de Datos**:
 
@@ -307,4 +315,4 @@ Toda revisión de pull request o de especificación DEBE verificar cumplimiento
 con los principios centrales. Cualquier complejidad que se aparte de un
 principio DEBE justificarse explícitamente por escrito o rechazarse.
 
-**Version**: 1.2.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-19
+**Version**: 1.3.0 | **Ratified**: TODO(RATIFICATION_DATE): confirmar fecha de ratificación oficial | **Last Amended**: 2026-08-19
