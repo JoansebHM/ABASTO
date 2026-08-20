@@ -1,4 +1,5 @@
 import { getSupabaseClient } from '@/lib/supabase';
+import type { UserProfile } from '@/lib/database.types';
 import type {
   LoginFormValues,
   RegisterFormValues,
@@ -36,6 +37,9 @@ export async function loginWithEmail(input: AuthLoginInput) {
     password: input.password,
   });
 
+  console.log('loginWithEmail data:', data);
+  console.log('loginWithEmail error:', error);
+
   if (error) {
     throw error;
   }
@@ -65,11 +69,28 @@ export async function getCurrentSession() {
   return data.session;
 }
 
+export async function getUserProfile(userId: string): Promise<UserProfile | null> {
+  const supabase = getSupabaseClient();
+
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select('*')
+    .eq('id', userId)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as UserProfile | null;
+}
+
 export const authService = {
   registerWithEmail,
   loginWithEmail,
   signOut,
   getCurrentSession,
+  getUserProfile,
 };
 
 export default authService;

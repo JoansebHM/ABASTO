@@ -2,10 +2,13 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthForm } from '../components/AuthForm';
 import { useRegisterMutation } from '../hooks/useRegisterMutation';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
   const registerMutation = useRegisterMutation();
+  const setSession = useAuthStore((state) => state.setSession);
+  const hydrate = useAuthStore((state) => state.hydrate);
 
   async function handleSubmit(
     values: Parameters<typeof AuthForm>[0]['onSubmit'] extends (
@@ -15,7 +18,11 @@ export default function RegisterPage() {
       : never
   ) {
     try {
-      await registerMutation.mutateAsync(values);
+      const result = await registerMutation.mutateAsync(values);
+      if (result.session) {
+        setSession(result.session);
+        await hydrate();
+      }
       navigate('/login');
     } catch (error) {
       console.error(error);

@@ -2,10 +2,13 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthForm } from '../components/AuthForm';
 import { useLoginMutation } from '../hooks/useLoginMutation';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const loginMutation = useLoginMutation();
+  const setSession = useAuthStore((state) => state.setSession);
+  const hydrate = useAuthStore((state) => state.hydrate);
 
   async function handleSubmit(
     values: Parameters<typeof AuthForm>[0]['onSubmit'] extends (
@@ -15,7 +18,9 @@ export default function LoginPage() {
       : never
   ) {
     try {
-      await loginMutation.mutateAsync(values);
+      const result = await loginMutation.mutateAsync(values);
+      setSession(result.session);
+      await hydrate();
       navigate('/dashboard');
     } catch (error) {
       // Error is surfaced by the form and mutation state; keep the page simple.
