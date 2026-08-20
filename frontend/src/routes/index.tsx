@@ -43,9 +43,7 @@ export default function AppRoutes() {
           path="/dashboard"
           element={
             <RequireAuth>
-              <AppShell>
-                <DashboardPage />
-              </AppShell>
+              <DashboardPage />
             </RequireAuth>
           }
         />
